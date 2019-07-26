@@ -1,5 +1,12 @@
 # log.c
-A simple logging library implemented in C99
+A simple logging library implemented in C99  
+
+This has only miniscule modifications from the original:  
+	* The library now prints normal, sane America dates.  
+	* Month, day, and year are always printed.  
+	* Colors are always printed.  
+	* Colors have been changed to make them more readable in my terminal.  
+	* The formatting of each log line has been changed to my preference.  
 
 ![screenshot](https://cloud.githubusercontent.com/assets/3920290/23831970/a2415e96-0723-11e7-9886-f8f5d2de60fe.png)
 
@@ -49,7 +56,7 @@ using the `log_set_fp()` function. The data written to the file output is
 of the following format:
 
 ```
-2047-03-11 20:18:26 TRACE src/main.c:11: Hello world
+03-11-2047 20:18:26 TRACE src/main.c:11: Hello world
 ```
 
 

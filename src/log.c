@@ -41,11 +41,17 @@ static const char *level_names[] = {
   "TRACE", "DEBUG", "INFO", "WARN", "ERROR", "FATAL"
 };
 
-#ifdef LOG_USE_COLOR
+/* 
+ * TRACE = blue
+ * DEBUG = purple
+ * INFO  = green
+ * WARN  = white
+ * ERROR = yellow
+ * FATAL = red
+ */
 static const char *level_colors[] = {
-  "\x1b[94m", "\x1b[36m", "\x1b[32m", "\x1b[33m", "\x1b[31m", "\x1b[35m"
+  "\x1b[94m", "\x1b[95m", "\x1b[96m", "\x1b[97m", "\x1b[93m", "\x1b[91m"
 };
-#endif
 
 
 static void lock(void)   {
@@ -102,15 +108,18 @@ void log_log(int level, const char *file, int line, const char *fmt, ...) {
   /* Log to stderr */
   if (!L.quiet) {
     va_list args;
-    char buf[16];
-    buf[strftime(buf, sizeof(buf), "%H:%M:%S", lt)] = '\0';
-#ifdef LOG_USE_COLOR
+    char buf[32];
+    snprintf(buf, 32,  
+		    "%02d-%02d-%02d %02d:%02d:%02d", 
+		    lt->tm_year + 1900,
+		    lt->tm_mon  + 1,
+		    lt->tm_mday,
+		    lt->tm_hour,
+		    lt->tm_min,
+		    lt->tm_sec);
     fprintf(
-      stderr, "%s %s%-5s\x1b[0m \x1b[90m%s:%d:\x1b[0m ",
+      stderr, "\x1b[90m%s\x1b[0m||%s%-5s\b\x1b[0m||\x1b[0m\x1b[92m%s:%d:\x1b[0m ",
       buf, level_colors[level], level_names[level], file, line);
-#else
-    fprintf(stderr, "%s %-5s %s:%d: ", buf, level_names[level], file, line);
-#endif
     va_start(args, fmt);
     vfprintf(stderr, fmt, args);
     va_end(args);
@@ -122,8 +131,15 @@ void log_log(int level, const char *file, int line, const char *fmt, ...) {
   if (L.fp) {
     va_list args;
     char buf[32];
-    buf[strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", lt)] = '\0';
-    fprintf(L.fp, "%s %-5s %s:%d: ", buf, level_names[level], file, line);
+    snprintf(buf, 32,  
+		    "%02d-%02d-%02d %02d:%02d:%02d", 
+		    lt->tm_year + 1900,
+		    lt->tm_mon  + 1,
+		    lt->tm_mday,
+		    lt->tm_hour,
+		    lt->tm_min,
+		    lt->tm_sec);
+    fprintf(L.fp, "%s||%-5s||%s:%d:|| ", buf, level_names[level], file, line);
     va_start(args, fmt);
     vfprintf(L.fp, fmt, args);
     va_end(args);
