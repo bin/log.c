@@ -118,7 +118,7 @@ void log_log(int level, const char *file, int line, const char *fmt, ...) {
 		    lt->tm_min,
 		    lt->tm_sec);
     fprintf(
-      stderr, "\x1b[90m%s\x1b[0m||%s%-6s\b\x1b[0m||\x1b[0m\x1b[92m%s:%d||\x1b[0m",
+      stderr, "\x1b[90m%s\x1b[0m||%s%-5s\b\x1b[0m||\x1b[0m\x1b[92m%s:%d\x1b[0m||", 
       buf, level_colors[level], level_names[level], file, line);
     va_start(args, fmt);
     vfprintf(stderr, fmt, args);

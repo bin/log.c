@@ -1,0 +1,37 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+L	.\src\log.c	/^} L;$/;"	v	typeref:struct:__anon1	file:
+LOG_DEBUG	.\src\log.h	/^enum { LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARN, LOG_ERROR, LOG_FATAL };$/;"	e	enum:__anon2
+LOG_ERROR	.\src\log.h	/^enum { LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARN, LOG_ERROR, LOG_FATAL };$/;"	e	enum:__anon2
+LOG_FATAL	.\src\log.h	/^enum { LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARN, LOG_ERROR, LOG_FATAL };$/;"	e	enum:__anon2
+LOG_H	.\src\log.h	9;"	d
+LOG_INFO	.\src\log.h	/^enum { LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARN, LOG_ERROR, LOG_FATAL };$/;"	e	enum:__anon2
+LOG_TRACE	.\src\log.h	/^enum { LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARN, LOG_ERROR, LOG_FATAL };$/;"	e	enum:__anon2
+LOG_VERSION	.\src\log.h	14;"	d
+LOG_WARN	.\src\log.h	/^enum { LOG_TRACE, LOG_DEBUG, LOG_INFO, LOG_WARN, LOG_ERROR, LOG_FATAL };$/;"	e	enum:__anon2
+fp	.\src\log.c	/^  FILE *fp;$/;"	m	struct:__anon1	file:
+level	.\src\log.c	/^  int level;$/;"	m	struct:__anon1	file:
+level_colors	.\src\log.c	/^static const char *level_colors[] = {$/;"	v	file:
+level_names	.\src\log.c	/^static const char *level_names[] = {$/;"	v	file:
+lock	.\src\log.c	/^  log_LockFn lock;$/;"	m	struct:__anon1	file:
+lock	.\src\log.c	/^static void lock(void)   {$/;"	f	file:
+log_LockFn	.\src\log.h	/^typedef void (*log_LockFn)(void *udata, int lock);$/;"	t
+log_debug	.\src\log.h	21;"	d
+log_error	.\src\log.h	24;"	d
+log_fatal	.\src\log.h	25;"	d
+log_info	.\src\log.h	22;"	d
+log_log	.\src\log.c	/^void log_log(int level, const char *file, int line, const char *fmt, ...) {$/;"	f
+log_set_fp	.\src\log.c	/^void log_set_fp(FILE *fp) {$/;"	f
+log_set_level	.\src\log.c	/^void log_set_level(int level) {$/;"	f
+log_set_lock	.\src\log.c	/^void log_set_lock(log_LockFn fn) {$/;"	f
+log_set_quiet	.\src\log.c	/^void log_set_quiet(int enable) {$/;"	f
+log_set_udata	.\src\log.c	/^void log_set_udata(void *udata) {$/;"	f
+log_trace	.\src\log.h	20;"	d
+log_warn	.\src\log.h	23;"	d
+quiet	.\src\log.c	/^  int quiet;$/;"	m	struct:__anon1	file:
+udata	.\src\log.c	/^  void *udata;$/;"	m	struct:__anon1	file:
+unlock	.\src\log.c	/^static void unlock(void) {$/;"	f	file:
