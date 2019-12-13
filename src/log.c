@@ -111,9 +111,9 @@ void log_log(int level, const char *file, int line, const char *fmt, ...) {
     char buf[32];
     snprintf(buf, 32,  
 		    "%02d-%02d-%02d %02d:%02d:%02d", 
-		    lt->tm_year + 1900,
 		    lt->tm_mon  + 1,
 		    lt->tm_mday,
+		    lt->tm_year + 1900,
 		    lt->tm_hour,
 		    lt->tm_min,
 		    lt->tm_sec);
