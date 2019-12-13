@@ -131,7 +131,7 @@ void log_log(int level, const char *file, int line, const char *fmt, ...) {
   if (L.fp) {
     va_list args;
     char buf[32];
-    buf[strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", lt)] = '\0';
+    buf[strftime(buf, sizeof(buf), "%m-%d-%Y %H:%M:%S", lt)] = '\0';
     fprintf(L.fp, "%s %-5s %s:%d: ", buf, level_names[level], file, line);
     va_start(args, fmt);
     vfprintf(L.fp, fmt, args);
