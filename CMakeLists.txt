@@ -5,4 +5,4 @@ set(CMAKE_C_STANDARD 11)
 message(STATUS "Building log library...")
 
 ADD_LIBRARY(log STATIC 
-	log.c)
+	src/log.c)
