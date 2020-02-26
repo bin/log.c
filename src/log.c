@@ -143,3 +143,54 @@ void log_log(int level, const char *file, int line, const char *fmt, ...) {
   /* Release lock */
   unlock();
 }
+
+void log_log_nnl(int level, const char *file, int line, const char *fmt, ...) {
+  if (level < L.level) {
+    return;
+  }
+
+  /* Acquire lock */
+  lock();
+
+  /* Get current time */
+  time_t t = time(NULL);
+  struct tm *lt = localtime(&t);
+
+  /* Log to stderr */
+  if (!L.quiet) {
+    va_list args;
+    char buf[32];
+    snprintf(buf, 32,  
+		    "%02d-%02d-%02d %02d:%02d:%02d", 
+		    lt->tm_mon  + 1,
+		    lt->tm_mday,
+		    lt->tm_year + 1900,
+		    lt->tm_hour,
+		    lt->tm_min,
+		    lt->tm_sec);
+    fprintf(
+      stderr, "%s %s%-5s\x1b[0m \x1b[90m%s:%d:\x1b[0m ",
+      buf, level_colors[level], level_names[level], file, line);
+    va_start(args, fmt);
+    vfprintf(stderr, fmt, args);
+    va_end(args);
+    fprintf(stderr, "\n");
+    fflush(stderr);
+  }
+
+  /* Log to file */
+  if (L.fp) {
+    va_list args;
+    char buf[32];
+    buf[strftime(buf, sizeof(buf), "%m-%d-%Y %H:%M:%S", lt)] = '\0';
+    fprintf(L.fp, "%s %-5s %s:%d: ", buf, level_names[level], file, line);
+    va_start(args, fmt);
+    vfprintf(L.fp, fmt, args);
+    va_end(args);
+    fprintf(L.fp, "\n");
+    fflush(L.fp);
+  }
+
+  /* Release lock */
+  unlock();
+}
