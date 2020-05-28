@@ -11,8 +11,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#include <tinycthread.h>
-
 #define LOG_VERSION "0.1.0"
 
 typedef void (*log_LockFn)(void *udata, int lock);
@@ -26,7 +24,7 @@ enum log_types {
 	L_FATAL
 };
 
-void log_log(enum log_types level, mtx_t *log_lock, const char *file, int line, const char *fmt, ...);
+void log_log(enum log_types level, void *log_lock, const char *file, int line, const char *fmt, ...);
 
 #define log(type, log_lock, fmt, ...) log_log(type, log_lock, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
 

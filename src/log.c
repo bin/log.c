@@ -26,8 +26,6 @@
 #include <string.h>
 #include <time.h>
 
-#include <tinycthread.h>
-
 #include "log.h"
 
 static struct {
@@ -95,13 +93,15 @@ void log_set_quiet(int enable) {
 }
 
 
-void log_log(enum log_types level, mtx_t *log_lock, const char *file, int line, const char *fmt, ...) {
+void log_log(enum log_types level, void *log_lock, const char *file, int line, const char *fmt, ...) {
   if (level < L.level) {
     return;
   }
 
   /* Acquire lock */
-  mtx_lock(log_lock);
+  if(log_lock != NULL) {
+	  mtx_lock(log_lock);
+  }
 
   /* Get current time */
   time_t t = time(NULL);
@@ -143,5 +143,7 @@ void log_log(enum log_types level, mtx_t *log_lock, const char *file, int line, 
   }
 
   /* Release lock */
-  mtx_unlock(log_lock);
+  if(log_lock != NULL) {
+	  mtx_unlock(log_lock);
+  }
 }
