@@ -28,6 +28,8 @@
 
 #include "log.h"
 
+unsigned short pct = -1;
+
 static struct {
   void *udata;
   log_LockFn lock;
@@ -93,6 +95,17 @@ void log_set_quiet(int enable) {
 }
 
 
+void progress() {
+  ++pct;
+  printf("\r    \r%hu%%", pct);
+}
+
+
+void cleanup_progress() {
+  printf("\r    \r");
+}
+
+
 void log_log(enum log_types level, void *log_lock, const char *file, int line, const char *fmt, ...) {
   if (level < L.level) {
     return;
@@ -101,6 +114,12 @@ void log_log(enum log_types level, void *log_lock, const char *file, int line, c
   /* Acquire lock */
   if(log_lock != NULL) {
 	  mtx_lock(log_lock);
+  }
+
+  if(pct > 0) {
+    // There's a percent indicator, so move to the beginning of the line and
+    // overwrite it.
+    printf("\r    \r");
   }
 
   /* Get current time */
@@ -140,6 +159,10 @@ void log_log(enum log_types level, void *log_lock, const char *file, int line, c
     va_end(args);
     fprintf(L.fp, "\n");
     fflush(L.fp);
+  }
+
+  if(pct > 0) {
+	  printf("%hu%%", pct);
   }
 
   /* Release lock */

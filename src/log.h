@@ -28,6 +28,10 @@ void log_log(enum log_types level, void *log_lock, const char *file, int line, c
 
 #define log(type, log_lock, fmt, ...) log_log(type, log_lock, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
 
+extern unsigned short pct;
+void progress();
+void cleanup_progress();
+
 void log_set_udata(void *udata);
 void log_set_lock(log_LockFn fn);
 void log_set_fp(FILE *fp);
