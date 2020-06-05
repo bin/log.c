@@ -102,7 +102,7 @@ void log_log(enum log_types level, void *log_lock, const char *file, int line, c
 #else
 void log_log(enum log_types level, const char *file, int line, const char *fmt, ...) {
 #endif
-  if (level < L.level) {
+  if (level < (enum log_types) L.level) {
     return;
   }
 
