@@ -24,11 +24,16 @@ enum log_types {
 	L_FATAL
 };
 
+#ifdef LOG_C_THREADED
 void log_log(enum log_types level, void *log_lock, const char *file, int line, const char *fmt, ...);
+#define log(type, log_lock, fmt, ...) log_log(type, log_lock, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#else
+void log_log(enum log_types level, const char *file, int line, const char *fmt, ...);
+#define log(type, fmt, ...) log_log(type, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#endif
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
-#define log(type, log_lock, fmt, ...) log_log(type, log_lock, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
 #pragma clang diagnostic pop
 
 void log_set_udata(void *udata);

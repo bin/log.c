@@ -28,6 +28,10 @@
 
 #include "log.h"
 
+#ifdef LOG_C_THREADED
+#include <tinycthread.h>
+#endif
+
 static struct {
   void *udata;
   log_LockFn lock;
@@ -93,15 +97,21 @@ void log_set_quiet(int enable) {
 }
 
 
+#ifdef LOG_C_THREADED
 void log_log(enum log_types level, void *log_lock, const char *file, int line, const char *fmt, ...) {
+#else
+void log_log(enum log_types level, const char *file, int line, const char *fmt, ...) {
+#endif
   if (level < L.level) {
     return;
   }
 
+  #ifdef LOG_C_THREADED
   /* Acquire lock */
   if(log_lock != NULL) {
 	  mtx_lock(log_lock);
   }
+  #endif
 
   /* Get current time */
   time_t t = time(NULL);
@@ -143,7 +153,9 @@ void log_log(enum log_types level, void *log_lock, const char *file, int line, c
   }
 
   /* Release lock */
+  #ifdef LOG_C_THREADED
   if(log_lock != NULL) {
 	  mtx_unlock(log_lock);
   }
+  #endif
 }
